@@ -230,24 +230,24 @@ for i, obj_dir in enumerate(obj_dirs[:NUM_OBJ]):
     mesh_files = [os.path.join(obj_dir, f) for f in os.listdir(obj_dir)]
     mesh_files.sort()
     
-    # compose html lines
-    html += ROW1.format(
-        title1="Fractures",
-        title2="Reconstruction",
-        title3="Ground Truth",
-        src1=mesh_files[1],
-        src2=mesh_files[2],
-        src3=mesh_files[0],
-    )
-    for i in range(1, 100):
-        try:
-            html += ROW2.format(
-                src1=mesh_files[3*i + 1],
-                src2=mesh_files[3*i + 2],
-                src3=mesh_files[3*i + 0],
-            )  
-        except:
-            break
+    if i % 5 == 0:
+        html += ROW1.format(
+            title1="Fractures",
+            title2="FRASIER",
+            title3="Ground Truth",
+            src1=mesh_files[2],
+            src2=mesh_files[0],
+            src3=mesh_files[1],
+        )
+    else:
+        html += ROW2.format(
+            title1="Fractures",
+            title2="FRASIER",
+            title3="Ground Truth",
+            src1=mesh_files[2],
+            src2=mesh_files[0],
+            src3=mesh_files[1],
+        )
     
 
 html = html + CATEGORY_TAIL + HTML_TAIL
