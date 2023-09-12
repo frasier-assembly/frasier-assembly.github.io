@@ -24,7 +24,7 @@ COLORS = np.array([
     [230, 138, 194, 255],
     [250, 140, 97, 255],
 ],
-                  dtype=np.uint8)
+    dtype=np.uint8)
 TRANS = np.array([
     [0., -0.3, 1.5],
     [0., 0.3, 1.2],

@@ -84,7 +84,7 @@ CATEGORY_TAIL = """
 """
 
 ROW1 = """
-                    <div class="row align-items-center">
+                    <div class="row align-items-center" align="center">
                         <div class="col-md-4 padding-0 canvas-row">
                             <a><h4>{title1}</h4></a>
                             <model-viewer
@@ -140,7 +140,7 @@ ROW1 = """
 """
 
 ROW2 = """
-                    <div class="row align-items-center">
+                    <div class="row align-items-center" align="center">
                         <div class="col-md-4 padding-0 canvas-row">
                             <model-viewer
                                 alt="Object"
@@ -189,6 +189,7 @@ ROW2 = """
                             >
                             </model-viewer>
                         </div>
+                    </div>
 """
 
 
@@ -214,7 +215,7 @@ NUM_OBJ = args.num_obj
 HTML_FILE = args.html_file
 NUM_OBJ = args.num_obj
 CATEGORY = DATA_DIR.split('/')[-1]
-assert SAVE_DIR.split('/')[-1] == CATEGORY
+# assert SAVE_DIR.split('/')[-1] == CATEGORY
 assert CATEGORY in HTML_FILE
 
 # create html file
@@ -227,45 +228,30 @@ obj_dirs = [os.path.join(DATA_DIR, d) for d in os.listdir(DATA_DIR)]
 np.random.shuffle(obj_dirs)
 for i, obj_dir in enumerate(obj_dirs[:NUM_OBJ]):
     mesh_files = [os.path.join(obj_dir, f) for f in os.listdir(obj_dir)]
-    num_pcs = [int(f[-8]) for f in mesh_files if '_transformed' not in f]
-    num_pcs.sort()
-    # we take meshes following the order
-    downloads, row1, row2, pieces = [], [], [], []
-    for num in num_pcs:
-        for f in mesh_files:
-            if '_transformed' not in f and f[-8] == str(num):
-                # f will be 'xxx/Bottle/abcdefgh/fractured_30_2pcs.glb'
-                ori_mesh, ori_mesh_save = f, f.replace(DATA_DIR, SAVE_DIR)
-                ori_mesh_save = convert_windows_path(ori_mesh_save)
-                trans_mesh = f'{f[:-4]}_transformed.glb'
-                trans_mesh_save = trans_mesh.replace(DATA_DIR, SAVE_DIR)
-                trans_mesh_save = convert_windows_path(trans_mesh_save)
-                row1.append(ori_mesh_save)
-                row2.append(trans_mesh_save)
-                pieces.append(f'{num} pieces')
-                downloads.append(
-                    f"{CATEGORY}{i}-{ori_mesh_save.split('/')[-1]}")
-                os.makedirs(os.path.dirname(ori_mesh_save), exist_ok=True)
-                shutil.copy(ori_mesh, ori_mesh_save)
-                shutil.copy(trans_mesh, trans_mesh_save)
-                mesh_files.remove(f)
-                break
+    mesh_files.sort()
+    
     # compose html lines
-    html = ROW1.format(
+    html += ROW1.format(
         title1="Fractures",
-        title2="Estimation",
+        title2="Reconstruction",
         title3="Ground Truth",
-        src1=row1[0],
-        src2=row1[1],
-        src3=row1[2],
+        src1=mesh_files[1],
+        src2=mesh_files[2],
+        src3=mesh_files[0],
     )
-    html += ROW2.format(
-        src1=row2[0],
-        src2=row2[1],
-        src3=row2[2],
-    )  
+    for i in range(1, 100):
+        try:
+            html += ROW2.format(
+                src1=mesh_files[3*i + 1],
+                src2=mesh_files[3*i + 2],
+                src3=mesh_files[3*i + 0],
+            )  
+        except:
+            break
+    
 
 html = html + CATEGORY_TAIL + HTML_TAIL
+import jhutil; jhutil.jhprint(1111, HTML_FILE)
 # write html file
 with open(HTML_FILE, 'w') as f:
     f.write(html)
