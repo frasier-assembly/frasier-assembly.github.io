@@ -15,24 +15,24 @@ HTML_HEAD = """<!DOCTYPE html>
 
         <title>Breaking Bad Dataset</title>
         <!-- Bootstrap core CSS -->
-        <!--link href="bootstrap.min.css" rel="stylesheet"-->
+        <!--link"stylesheet"-->
         <link
             rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous"
         />
 
         <!-- Custom styles for this template -->
-        <link href="offcanvas.css" rel="stylesheet" />
-        <!--    <link rel="icon" href="img/favicon.gif" type="image/gif">-->
+        <linklesheet" />
+        <!--    <link rel="icon"="image/gif">-->
     </head>
 
     <body>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h2>Breaking Bad Dataset</h2>
-                <a href="index.html"><h4>Back to homepage</h4></a>
+                <a to homepage</h4></a>
             </div>
         </div>
 """
@@ -85,8 +85,8 @@ CATEGORY_TAIL = """
 
 ROW1 = """
                     <div class="row align-items-center">
-                        <div class="col-md-3 padding-0 canvas-row">
-                            <a href="{src1}" download="{fn1}"><h4>{title1}</h4></a>
+                        <div class="col-md-4 padding-0 canvas-row">
+                            <a><h4>{title1}</h4></a>
                             <model-viewer
                                 alt="Object"
                                 src="{src1}"
@@ -102,8 +102,8 @@ ROW1 = """
                             >
                             </model-viewer>
                         </div>
-                        <div class="col-md-3 padding-0 canvas-row">
-                            <a href="{src2}" download="{fn2}"><h4>{title2}</h4></a>
+                        <div class="col-md-4 padding-0 canvas-row">
+                            <a><h4>{title2}</h4></a>
                             <model-viewer
                                 alt="Object"
                                 src="{src2}"
@@ -119,28 +119,11 @@ ROW1 = """
                             >
                             </model-viewer>
                         </div>
-                        <div class="col-md-3 padding-0 canvas-row">
-                            <a href="{src3}" download="{fn3}"><h4>{title3}</h4></a>
+                        <div class="col-md-4 padding-0 canvas-row">
+                            <a><h4>{title3}</h4></a>
                             <model-viewer
                                 alt="Object"
                                 src="{src3}"
-                                style="
-                                    width: 100%;
-                                    height: 250px;
-                                    background-color: #FFFFFF;
-                                "
-                                exposure=".8"
-                                camera-orbit="90deg 90deg 105%"
-                                auto-rotate
-                                camera-controls
-                            >
-                            </model-viewer>
-                        </div>
-                        <div class="col-md-3 padding-0 canvas-row">
-                            <a href="{src4}" download="{fn4}"><h4>{title4}</h4></a>
-                            <model-viewer
-                                alt="Fracture"
-                                src="{src4}"
                                 style="
                                     width: 100%;
                                     height: 250px;
@@ -158,7 +141,7 @@ ROW1 = """
 
 ROW2 = """
                     <div class="row align-items-center">
-                        <div class="col-md-3 padding-0 canvas-row">
+                        <div class="col-md-4 padding-0 canvas-row">
                             <model-viewer
                                 alt="Object"
                                 src="{src1}"
@@ -174,7 +157,7 @@ ROW2 = """
                             >
                             </model-viewer>
                         </div>
-                        <div class="col-md-3 padding-0 canvas-row">
+                        <div class="col-md-4 padding-0 canvas-row">
                             <model-viewer
                                 alt="Object"
                                 src="{src2}"
@@ -190,7 +173,7 @@ ROW2 = """
                             >
                             </model-viewer>
                         </div>
-                        <div class="col-md-3 padding-0 canvas-row">
+                        <div class="col-md-4 padding-0 canvas-row">
                             <model-viewer
                                 alt="Object"
                                 src="{src3}"
@@ -206,23 +189,6 @@ ROW2 = """
                             >
                             </model-viewer>
                         </div>
-                        <div class="col-md-3 padding-0 canvas-row">
-                            <model-viewer
-                                alt="Fracture"
-                                src="{src4}"
-                                style="
-                                    width: 100%;
-                                    height: 250px;
-                                    background-color: #FFFFFF;
-                                "
-                                exposure=".8"
-                                camera-orbit="90deg 90deg 105%"
-                                auto-rotate
-                                camera-controls
-                            >
-                            </model-viewer>
-                        </div>
-                    </div>
 """
 
 
@@ -285,26 +251,19 @@ for i, obj_dir in enumerate(obj_dirs[:NUM_OBJ]):
                 mesh_files.remove(f)
                 break
     # compose html lines
-    html += ROW1.format(
-        title1=pieces[0],
-        title2=pieces[1],
-        title3=pieces[2],
-        title4=pieces[3],
-        fn1=downloads[0],
-        fn2=downloads[1],
-        fn3=downloads[2],
-        fn4=downloads[3],
+    html = ROW1.format(
+        title1="Fractures",
+        title2="Estimation",
+        title3="Ground Truth",
         src1=row1[0],
         src2=row1[1],
         src3=row1[2],
-        src4=row1[3],
     )
     html += ROW2.format(
         src1=row2[0],
         src2=row2[1],
         src3=row2[2],
-        src4=row2[3],
-    )
+    )  
 
 html = html + CATEGORY_TAIL + HTML_TAIL
 # write html file
